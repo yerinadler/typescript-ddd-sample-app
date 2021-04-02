@@ -1,5 +1,5 @@
 import { INTERNAL_SERVER_ERROR } from 'http-status-codes';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 
 export const errorHandler = (err: any, req: Request, res: Response) => {
   console.log(`[ERROR] : ${err.message}`);
