@@ -15,7 +15,7 @@ export class PropertyApplication {
   async getPropertyById(id: string) {
     const property = await this.propertyRepository.findOneById(id);
     if (!property) {
-      throw new ApplicationError('404', 'The property requested does not exist');
+      throw new ApplicationError('404', 404, 'The property requested does not exist');
     }
     return new PropertyDto(property.guid, property.propertyType, property.name, property.floors, property.address);
   }

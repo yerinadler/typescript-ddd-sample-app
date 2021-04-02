@@ -2,7 +2,6 @@ import { injectable, inject } from 'inversify';
 import { TYPES } from '@constants/types';
 import { ApplicationError } from '@core/ApplicationError';
 import { IApplicationRepository } from '@domain/application/IApplicationRepository';
-import { Application } from '@domain/application/Application';
 import { ApplicationDto } from './dtos/ApplicationDto';
 import { IPropertyRepository } from '@domain/property/IPropertyRepository';
 import { IUserRepository } from '@domain/user/IUserRepository';
@@ -23,18 +22,18 @@ export class ApplicationApplication {
 
   async getApplicationById(id: string): Promise<ApplicationDto | null> {
     const app = await this.applicationRepository.findOneById(id);
-    if (!app) throw new ApplicationError('404', 'The app with the requested ID does not exist');
+    if (!app) throw new ApplicationError('404', 404, 'The app with the requested ID does not exist');
     return new ApplicationDto(app.guid, app.renterId, app.propertyId, app.applicationStatus);
   }
 
   async createApplication({ renterId, propertyId }: any): Promise<void> {
     const user = await this.userRepository.findOneById(renterId);
     if (!user) {
-      throw new ApplicationError('400', 'The user is invalid');
+      throw new ApplicationError('400', 400, 'The user is invalid');
     }
     const property = await this.propertyRepository.findOneById(propertyId);
     if (!property) {
-      throw new ApplicationError('400', 'The property is invalid');
+      throw new ApplicationError('400', 400, 'The property is invalid');
     }
     const application = new ApplicationRegistration().applyUserToProperty(user, property);
     await this.applicationRepository.save(application);

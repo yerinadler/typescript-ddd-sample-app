@@ -19,7 +19,7 @@ export class UserApplication {
 
   async getUserById(id: string): Promise<any | null> {
     const user = await this.userRepository.findOneById(id);
-    if (!user) throw new ApplicationError('404', 'The user with the requested ID does not exist');
+    if (!user) throw new ApplicationError('404', 404, 'The user with the requested ID does not exist');
     return new UserDto(user.guid, user.email ,user.firstname, user.lastname);
   }
 
