@@ -1,4 +1,5 @@
 import { Entity } from '@core/Entity';
+import { IAggregateRoot } from '@core/IAggregateRoot';
 import { Address } from './Address';
 
 export interface IApplicationProps {
@@ -10,7 +11,7 @@ export interface IApplicationProps {
   status?: string;
 }
 
-export class Application extends Entity<IApplicationProps> {
+export class Application extends Entity<IApplicationProps> implements IAggregateRoot {
   private _renterId: string;
   private _address: Address;
   private _firstname: string;

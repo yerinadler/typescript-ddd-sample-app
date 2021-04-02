@@ -1,4 +1,5 @@
 import { Entity } from '@core/Entity';
+import { IAggregateRoot } from '@core/IAggregateRoot';
 
 export interface IUserProps {
   email: string;
@@ -6,7 +7,7 @@ export interface IUserProps {
   lastname: string;
 }
 
-export class User extends Entity<IUserProps> {
+export class User extends Entity<IUserProps> implements IAggregateRoot {
 
   private _email: string;
   private _firstname: string;
