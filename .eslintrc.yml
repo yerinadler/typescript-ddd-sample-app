@@ -16,7 +16,7 @@ rules:
     - 2
   max-len:
     - error
-    - 200
+    - 120
   linebreak-style:
     - error
     - unix

@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { IDataMapper } from '@core/IDataMapper';
 import { Property } from '@domain/property/Property';
+import { Address } from '@domain/application/Address';
 
 @injectable()
 export class PropertyDataMapper implements IDataMapper<Property> {
@@ -10,8 +11,9 @@ export class PropertyDataMapper implements IDataMapper<Property> {
       propertyType,
       name,
       floors,
-      address,
+      address: dbAddress,
     } = property;
+    const address = Address.create(dbAddress);
     return Property.create({ name, propertyType, floors, address }, guid);
   }
 
@@ -21,7 +23,7 @@ export class PropertyDataMapper implements IDataMapper<Property> {
       propertyType: propertyEntity.propertyType,
       name: propertyEntity.name,
       floors: propertyEntity.floors,
-      address: propertyEntity.address,
+      address: propertyEntity.address.value,
     };
   }
 }

@@ -1,5 +1,6 @@
 import { TYPES } from '@constants/types';
 import { ApplicationError } from '@core/ApplicationError';
+import { Address } from '@domain/application/Address';
 import { IPropertyRepository } from '@domain/property/IPropertyRepository';
 import { Property } from '@domain/property/Property';
 import { inject, injectable } from 'inversify';
@@ -17,10 +18,16 @@ export class PropertyApplication {
     if (!property) {
       throw new ApplicationError('404', 404, 'The property requested does not exist');
     }
-    return new PropertyDto(property.guid, property.propertyType, property.name, property.floors, property.address);
+    return new PropertyDto(
+      property.guid,
+      property.propertyType,
+      property.name, property.floors,
+      property.address.value
+    );
   }
 
-  async createProperty({ propertyType, name, floors, address }: any): Promise<void> {
+  async createProperty({ propertyType, name, floors, address: parsedAddress }: any): Promise<void> {
+    const address = Address.create(parsedAddress);
     const property = Property.create({ propertyType, name, floors, address });
     await this.propertyRepository.save(property);
   }
