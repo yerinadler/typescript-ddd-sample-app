@@ -7,7 +7,6 @@ import config from '@config/main';
 import '@interfaces/http/controllers';
 import { createMongodbConnection } from '@infrastructure/db/mongodb';
 import { Db } from 'mongodb';
-// import { BookApplication } from '@application/book/BookApplication';
 import { errorHandler } from '@interfaces/http/middlewares/ErrorHandler';
 import { Application as ExpressApplication } from 'express';
 import { IApplicationRepository } from '@domain/application/IApplicationRepository';
@@ -21,20 +20,26 @@ import { User } from '@domain/user/User';
 import { UserDataMapper } from '@infrastructure/dataMapper/UserDataMapper';
 import { Application } from '@domain/application/Application';
 import { ApplicationDataMapper } from '@infrastructure/dataMapper/ApplicationDataMapper';
+import { PropertyDataMapper } from '@infrastructure/dataMapper/PropertyDataMapper';
+import { Property } from '@domain/property/Property';
+import { IPropertyRepository } from '@domain/property/IPropertyRepository';
+import { PropertyRepository } from '@infrastructure/repositories/PropertyRepository';
+import { PropertyApplication } from '@application/property/PropertyApplication';
 
 const initialise = async () => {
   const container = new Container();
 
-  // Module Registration
   const db: Db = await createMongodbConnection(config.MONGODB_URI);
   container.bind<Db>(TYPES.Db).toConstantValue(db);
   container.bind<IDataMapper<Application>>(TYPES.ApplicationDataMapper).to(ApplicationDataMapper);
   container.bind<IDataMapper<User>>(TYPES.UserDataMapper).to(UserDataMapper);
+  container.bind<IDataMapper<Property>>(TYPES.PropertyDataMapper).to(PropertyDataMapper);
   container.bind<IApplicationRepository>(TYPES.ApplicationRepository).to(ApplicationRepository);
   container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
+  container.bind<IPropertyRepository>(TYPES.PropertyRepository).to(PropertyRepository);
   container.bind<ApplicationApplication>(TYPES.ApplicationApplication).to(ApplicationApplication);
   container.bind<UserApplication>(TYPES.UserApplication).to(UserApplication);
-  // ======================================================
+  container.bind<PropertyApplication>(TYPES.PropertyApplication).to(PropertyApplication);
 
   // API Server initialisation
   const server = new InversifyExpressServer(container);
@@ -56,7 +61,7 @@ const initialise = async () => {
   apiServer.listen(config.API_PORT, () =>
     console.log('The application is initialised on the port %s', config.API_PORT)
   );
-  // ======================================================
+
   return container;
 };
 

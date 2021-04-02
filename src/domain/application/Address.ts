@@ -1,37 +1,26 @@
 import { ValueObject } from '@core/ValueObject';
 
-export class Address extends ValueObject {
-  private _streetAddress: string;
-  private _city: string;
-  private _state: string;
-  private _zip: string;
+interface IAddressProps {
+  streetAddress: string,
+  city: string,
+  state: string,
+  zip: string,
+}
 
-  constructor(
-    streetAddress: string,
-    city: string,
-    state: string,
-    zip: string,
-  ) {
-    super();
-    this._streetAddress = streetAddress;
-    this._city = city;
-    this._state = state;
-    this._zip = zip;
+interface IAddressValueObjectProps {
+  value: IAddressProps;
+}
+
+export class Address extends ValueObject<IAddressValueObjectProps> {
+  private constructor(props: IAddressValueObjectProps) {
+    super(props);
   }
 
-  get streetAddress() {
-    return this._streetAddress;
+  get value(): IAddressProps {
+    return this.props.value;
   }
 
-  get city() {
-    return this._city;
-  }
-
-  get state() {
-    return this._state;
-  }
-
-  get zip() {
-    return this._zip;
+  public static create(props: IAddressProps) {
+    return new Address({ value: props });
   }
 }
