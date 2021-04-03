@@ -11,9 +11,7 @@ import { errorHandler } from '@interfaces/http/middlewares/ErrorHandler';
 import { Application as ExpressApplication } from 'express';
 import { IApplicationRepository } from '@domain/application/IApplicationRepository';
 import { ApplicationRepository } from '@infrastructure/repositories/ApplicationRepository';
-import { ApplicationApplication } from '@application/application/ApplicationApplicationService';
 import { UserRepository } from '@infrastructure/repositories/UserRepository';
-import { UserApplication } from '@application/user/UserApplication';
 import { IUserRepository } from '@domain/user/IUserRepository';
 import { IDataMapper } from '@core/IDataMapper';
 import { User } from '@domain/user/User';
@@ -24,7 +22,9 @@ import { PropertyDataMapper } from '@infrastructure/dataMapper/PropertyDataMappe
 import { Property } from '@domain/property/Property';
 import { IPropertyRepository } from '@domain/property/IPropertyRepository';
 import { PropertyRepository } from '@infrastructure/repositories/PropertyRepository';
-import { PropertyApplication } from '@application/property/PropertyApplication';
+
+// Container Module Imports
+import { applicationContainerModule } from '@application/container';
 
 const initialise = async () => {
   const container = new Container();
@@ -37,9 +37,7 @@ const initialise = async () => {
   container.bind<IApplicationRepository>(TYPES.ApplicationRepository).to(ApplicationRepository);
   container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
   container.bind<IPropertyRepository>(TYPES.PropertyRepository).to(PropertyRepository);
-  container.bind<ApplicationApplication>(TYPES.ApplicationApplication).to(ApplicationApplication);
-  container.bind<UserApplication>(TYPES.UserApplication).to(UserApplication);
-  container.bind<PropertyApplication>(TYPES.PropertyApplication).to(PropertyApplication);
+  container.load(applicationContainerModule);
 
   // API Server initialisation
   const server = new InversifyExpressServer(container);
