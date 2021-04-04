@@ -1,8 +1,8 @@
 import { TYPES } from '@constants/types';
 import { ContainerModule, interfaces } from 'inversify';
-import { ApplicationApplication } from './application/ApplicationApplicationService';
-import { PropertyApplication } from './property/PropertyApplication';
-import { UserApplication } from './user/UserApplication';
+import { ApplicationApplication } from '@application/application/ApplicationApplicationService';
+import { PropertyApplication } from '@application/property/PropertyApplication';
+import { UserApplication } from '@application/user/UserApplication';
 
 export const applicationContainerModule = new ContainerModule(
   (
