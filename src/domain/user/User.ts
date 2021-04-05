@@ -8,7 +8,6 @@ export interface IUserProps {
 }
 
 export class User extends Entity<IUserProps> implements IAggregateRoot {
-
   private _email: string;
   private _firstname: string;
   private _lastname: string;

@@ -46,6 +46,9 @@ export class Property extends Entity<IPropertyProps> implements IAggregateRoot {
   }
 
   public static create(props: IPropertyProps, guid?: string) {
+    if (!props.name || !props.propertyType || !props.floors || !props.address) {
+      throw new Error('Unable to create the property');
+    }
     return new Property(props, guid);
   }
 }

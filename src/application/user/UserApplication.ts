@@ -24,7 +24,6 @@ export class UserApplication {
   }
 
   async createUser({ email, firstname, lastname }: any): Promise<void> {
-    console.log(this.userRepository);
     const user = User.create({ email, firstname, lastname });
     await this.userRepository.save(user);
   }
