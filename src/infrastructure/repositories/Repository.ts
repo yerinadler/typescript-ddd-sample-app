@@ -40,7 +40,7 @@ implements IRepository<TDomainEntity> {
       await this.collectionInstance.insertOne(this.dataMapper.toDalEntity(entity));
       return;
     }
-    await this.collectionInstance.replaceOne({ guid }, entity);
+    await this.collectionInstance.replaceOne({ guid }, this.dataMapper.toDalEntity(entity));
   }
 
   async delete(id: string): Promise<void> {
