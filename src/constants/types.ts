@@ -3,11 +3,17 @@ export const TYPES = {
   Db: Symbol('Db'),
 
   // Repositories
-  BookRepository: Symbol('BookRepository'),
+  ApplicationRepository: Symbol('ApplicationRepository'),
+  UserRepository: Symbol('UserRepository'),
+  PropertyRepository: Symbol('PropertyRepository'),
 
   // Data Mappers
-  BookDataMapper: Symbol('BookDataMapper'),
+  ApplicationDataMapper: Symbol('ApplicationDataMapper'),
+  UserDataMapper: Symbol('UserDataMapper'),
+  PropertyDataMapper: Symbol('PropertyDataMapper'),
 
   // Application Services
-  BookApplication: Symbol('BookApplication'),
+  ApplicationApplication: Symbol('ApplicationApplication'),
+  UserApplication: Symbol('UserApplication'),
+  PropertyApplication: Symbol('PropertyApplication'),
 };

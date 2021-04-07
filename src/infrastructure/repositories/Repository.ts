@@ -37,7 +37,7 @@ implements IRepository<TDomainEntity> {
     const guid = (entity as any).guid;
     const exists = await this.doesExists(guid);
     if (!exists) {
-      await this.collectionInstance.insertOne(entity);
+      await this.collectionInstance.insertOne(this.dataMapper.toDalEntity(entity));
       return;
     }
     await this.collectionInstance.replaceOne({ guid }, entity);
